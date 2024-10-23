@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 
 export default function TodoInput(props) {
-  const { handleAddTodo } = props;
+  const { handleAddTodo, todos } = props;
   const [inputValue, setInputValue] = useState("");
 
   return (
@@ -20,6 +20,7 @@ export default function TodoInput(props) {
             return;
           }
           handleAddTodo(inputValue);
+
           setInputValue("");
         }}
       >

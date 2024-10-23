@@ -3,17 +3,23 @@ import Tabs from "./components/Tabs";
 import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
 import { useState, useEffect } from "react";
+import { v4 as uuidv4, v4 } from "uuid";
 
 function App() {
   const [todos, setTodos] = useState([
-    { input: "Hello! Add your first todo!", complete: true },
+    { input: "Hello! Add your first todo!", complete: true, id: "" },
   ]);
 
   const [selectedTab, setSelectedTab] = useState("All");
 
   function handleAddTodo(newTodo) {
-    setTodos([...todos, { input: newTodo, complete: false }]);
-    handleSaveData([...todos, { input: newTodo, complete: false }]);
+    let newTodoList = [
+      ...todos,
+      { input: newTodo, complete: false, id: uuidv4() },
+    ];
+
+    setTodos(newTodoList);
+    handleSaveData(newTodoList);
   }
 
   function handleCompleteTodo(index) {
@@ -25,13 +31,19 @@ function App() {
     handleSaveData(newTodoList);
   }
 
-  function handleDeleteTodo(index) {
-    let newTodoList = todos.filter((val, valIndex) => {
-      return valIndex !== index;
-    });
-    setTodos(newTodoList);
-    handleSaveData(newTodoList);
-  }
+  // function handleDeleteTodo(index) {
+  //   let newTodoList = todos.filter((val, valIndex) => {
+  //     return valIndex !== index;
+  //   });
+  //   setTodos(newTodoList);
+  //   handleSaveData(newTodoList);
+  // }
+
+  const handleDeleteTodo = (targetTodoId) => {
+    setTodos((prevState) =>
+      prevState.filter((todo) => todo.id !== targetTodoId)
+    );
+  };
 
   function handleSaveData(currTodos) {
     localStorage.setItem("todo-app", JSON.stringify({ todos: currTodos }));
@@ -59,7 +71,7 @@ function App() {
         todos={todos}
         handleCompleteTodo={handleCompleteTodo}
       />
-      <TodoInput handleAddTodo={handleAddTodo} />
+      <TodoInput handleAddTodo={handleAddTodo} todos={todos} />
     </>
   );
 }

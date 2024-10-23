@@ -14,10 +14,11 @@ export default function TodoCard(props) {
           disabled={todo.complete}
         >
           <h6>Done</h6>
+          <p>Your unique key for this task: {todo.id}</p>
         </button>
         <button
           onClick={() => {
-            handleDeleteTodo(todoIndex);
+            handleDeleteTodo(todo.id);
           }}
         >
           <h6>Delete</h6>
