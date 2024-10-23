@@ -12,9 +12,8 @@ function App() {
   const [selectedTab, setSelectedTab] = useState("All");
 
   function handleAddTodo(newTodo) {
-    const newTodoList = [...todos, { input: newTodo, complete: false }];
-    setTodos(newTodoList);
-    handleSaveData(newTodoList);
+    setTodos([...todos, { input: newTodo, complete: false }]);
+    handleSaveData([...todos, { input: newTodo, complete: false }]);
   }
 
   function handleCompleteTodo(index) {
